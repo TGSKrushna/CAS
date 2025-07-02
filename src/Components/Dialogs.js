@@ -15,6 +15,7 @@ export default function Dialogs() {
   const toggleWindow = () => {
     setVisibleWindow(!visibleWindow);
   };
+
   return (
     <div>
       {!visibleDialog && !visibleWindow && (
