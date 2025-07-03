@@ -10,7 +10,7 @@ import { Input, Checkbox } from "@progress/kendo-react-inputs";
 import { Button } from "@progress/kendo-react-buttons";
 import { AutoComplete } from "@progress/kendo-react-dropdowns";
 import { sports } from "../shared-dd-data";
-import { DateInput, DatePicker } from "@progress/kendo-react-dateinputs";
+import { DatePicker } from "@progress/kendo-react-dateinputs";
 
 const emailRegex = new RegExp(/\S+@\S+\.\S+/);
 const emailValidator = (value) =>
@@ -26,8 +26,13 @@ const EmailInput = (fieldRenderProps) => {
 };
 
 const DepartmentDropdown = (fieldRenderProps) => {
+  const start = performance.now();
   const { validationMessage, visited, value, onChange, name, ...others } =
     fieldRenderProps;
+  React.useEffect(() => {
+    const end = performance.now(); // ⏱️ End time
+    console.log(`⏱️ SportsDropdown render time: ${(end - start).toFixed(2)}ms`);
+  }, []);
 
   return (
     <div className="k-form-field-wrap">
@@ -45,8 +50,14 @@ const DepartmentDropdown = (fieldRenderProps) => {
 };
 
 const DateInputComponent = (fieldRenderProps) => {
+  const start = performance.now();
   const { validationMessage, visited, value, onChange, name } =
     fieldRenderProps;
+
+  React.useEffect(() => {
+    const end = performance.now(); // ⏱️ End time
+    console.log(`⏱️ DatePicker render time: ${(end - start).toFixed(2)}ms`);
+  }, []);
 
   return (
     <div className="k-form-field-wrap">
@@ -63,9 +74,13 @@ const DateInputComponent = (fieldRenderProps) => {
 };
 
 const CheckboxComponent = (fieldRenderProps) => {
+  const start = performance.now();
   const { validationMessage, visited, value, onChange, label, name } =
     fieldRenderProps;
-
+  React.useEffect(() => {
+    const end = performance.now(); // ⏱️ End time
+    console.log(`⏱️ Checkbox render time: ${(end - start).toFixed(2)}ms`);
+  }, []);
   return (
     <div className="k-form-field-wrap" style={{ marginTop: "16px" }}>
       <Checkbox
@@ -81,8 +96,14 @@ const CheckboxComponent = (fieldRenderProps) => {
 
 export default function FormComponent() {
   const handleSubmit = (dataItem) => {
-    debugger;
-    alert(JSON.stringify(dataItem, null, 2));
+    const formattedData = {
+      ...dataItem,
+      hireDate: dataItem.hireDate
+        ? dataItem.hireDate.toLocaleDateString("en-GB") // "07/07/2025"
+        : null,
+    };
+
+    alert(JSON.stringify(formattedData, null, 2));
   };
   return (
     <div style={{ marginLeft: "100px" }}>
