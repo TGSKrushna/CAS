@@ -96,12 +96,16 @@ const CheckboxComponent = (fieldRenderProps) => {
 
 export default function FormComponent() {
   const handleSubmit = (dataItem) => {
+    const start = performance.now();
     const formattedData = {
       ...dataItem,
       hireDate: dataItem.hireDate
         ? dataItem.hireDate.toLocaleDateString("en-GB") // "07/07/2025"
         : null,
     };
+
+    const end = performance.now(); // ⏱️ End time
+    console.log(`⏱️ Form submit time: ${(end - start).toFixed(2)}ms`);
 
     alert(JSON.stringify(formattedData, null, 2));
   };
