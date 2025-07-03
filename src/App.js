@@ -9,6 +9,7 @@ import NotificationComponent from "./Components/NotificationComponent";
 import DateTimePicker from "./Components/DateTimePicker";
 import Dialogs from "./Components/Dialogs";
 import Indicator from "./Components/Indicator";
+import "./custom.css";
 
 function App() {
   const [selectedComponent, setSelectedComponent] = useState("form");

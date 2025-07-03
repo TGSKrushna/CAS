@@ -1,0 +1,14 @@
+/* custom.css */
+
+/* Style each item in AutoComplete dropdown */
+.k-animation-container .k-list .k-list-item {
+  color: red !important;
+  font-weight: bold !important;
+}
+
+/* Style hover effect on items */
+.k-animation-container .k-list .k-list-item.k-hover,
+.k-animation-container .k-list .k-list-item:hover {
+  background-color: #ffe6e6 !important;
+  border-left: 3px solid red !important;
+}

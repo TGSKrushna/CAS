@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Form,
   Field,
@@ -26,13 +26,8 @@ const EmailInput = (fieldRenderProps) => {
 };
 
 const DepartmentDropdown = (fieldRenderProps) => {
-  const start = performance.now();
-  const { validationMessage, visited, value, onChange, name, ...others } =
-    fieldRenderProps;
-  React.useEffect(() => {
-    const end = performance.now(); // ⏱️ End time
-    console.log(`⏱️ SportsDropdown render time: ${(end - start).toFixed(2)}ms`);
-  }, []);
+  const focusTimeRef = useRef(null);
+  const { validationMessage, visited, value, onChange } = fieldRenderProps;
 
   return (
     <div className="k-form-field-wrap">
@@ -40,6 +35,18 @@ const DepartmentDropdown = (fieldRenderProps) => {
         data={sports}
         suggest={true}
         value={value}
+        onFocus={() => {
+          focusTimeRef.current = performance.now(); // ⏱️ start timing
+        }}
+        onOpen={() => {
+          if (focusTimeRef.current) {
+            const duration = performance.now() - focusTimeRef.current;
+            console.log(
+              `⏱️ AutoComplete dropdown open time: ${duration.toFixed(2)}ms`
+            );
+            focusTimeRef.current = null; // reset
+          }
+        }}
         onChange={(e) => {
           onChange({ value: e.value }); // ✅ Sync form state
         }}
