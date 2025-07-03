@@ -14,6 +14,7 @@ import { groupBy } from "@progress/kendo-data-query";
 import { userIcon, searchIcon } from "@progress/kendo-svg-icons";
 import { InputPrefix, InputSuffix } from "@progress/kendo-react-inputs";
 import { Button } from "@progress/kendo-react-buttons";
+import { Autocomplete, TextField } from "@mui/material";
 
 export default function Dropdown() {
   const sports = [
@@ -327,6 +328,18 @@ export default function Dropdown() {
           footer={footer}
           //opened
           listNoDataRender={listNoDataRender}
+        />
+        <Autocomplete
+          options={sports}
+          defaultValue="Basketball"
+          style={{ width: 300, marginTop: "10px" }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="MUI Autocomplete"
+              variant="outlined"
+            />
+          )}
         />
         <AutoComplete
           style={{

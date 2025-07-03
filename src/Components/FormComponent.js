@@ -6,9 +6,11 @@ import {
   FieldWrapper,
 } from "@progress/kendo-react-form";
 import { Error } from "@progress/kendo-react-labels";
-import { Input } from "@progress/kendo-react-inputs";
+import { Input, Checkbox } from "@progress/kendo-react-inputs";
 import { Button } from "@progress/kendo-react-buttons";
-import { DropDownList } from "@progress/kendo-react-dropdowns";
+import { AutoComplete } from "@progress/kendo-react-dropdowns";
+import { sports } from "../shared-dd-data";
+import { DateInput, DatePicker } from "@progress/kendo-react-dateinputs";
 
 const emailRegex = new RegExp(/\S+@\S+\.\S+/);
 const emailValidator = (value) =>
@@ -22,23 +24,55 @@ const EmailInput = (fieldRenderProps) => {
     </div>
   );
 };
-const departments = [
-  { text: "Engineering", id: 1 },
-  { text: "Marketing", id: 2 },
-  { text: "HR", id: 3 },
-  { text: "Finance", id: 4 },
-];
 
 const DepartmentDropdown = (fieldRenderProps) => {
-  const { validationMessage, visited, ...others } = fieldRenderProps;
+  const { validationMessage, visited, value, onChange, name, ...others } =
+    fieldRenderProps;
 
   return (
     <div className="k-form-field-wrap">
-      <DropDownList
-        {...others}
-        data={departments}
-        textField="text"
-        dataItemKey="id"
+      <AutoComplete
+        data={sports}
+        suggest={true}
+        value={value}
+        onChange={(e) => {
+          onChange({ value: e.value }); // ✅ Sync form state
+        }}
+      />
+      {visited && validationMessage && <Error>{validationMessage}</Error>}
+    </div>
+  );
+};
+
+const DateInputComponent = (fieldRenderProps) => {
+  const { validationMessage, visited, value, onChange, name } =
+    fieldRenderProps;
+
+  return (
+    <div className="k-form-field-wrap">
+      <DatePicker
+        style={{ width: "300px" }}
+        format="MM/dd/yyyy"
+        value={value}
+        onChange={(e) => onChange({ value: e.value })}
+        name={name}
+      />
+      {visited && validationMessage && <Error>{validationMessage}</Error>}
+    </div>
+  );
+};
+
+const CheckboxComponent = (fieldRenderProps) => {
+  const { validationMessage, visited, value, onChange, label, name } =
+    fieldRenderProps;
+
+  return (
+    <div className="k-form-field-wrap" style={{ marginTop: "16px" }}>
+      <Checkbox
+        name={name}
+        label={label}
+        checked={value}
+        onChange={(e) => onChange({ value: e.value })}
       />
       {visited && validationMessage && <Error>{validationMessage}</Error>}
     </div>
@@ -97,9 +131,23 @@ export default function FormComponent() {
               </FieldWrapper>
               <FieldWrapper>
                 <Field
-                  name={"department"}
+                  name={"sports"}
                   component={DepartmentDropdown}
-                  label={"Department"}
+                  label={"sports"}
+                />
+              </FieldWrapper>
+              <FieldWrapper>
+                <Field
+                  name={"hireDate"}
+                  component={DateInputComponent}
+                  label={"Hire Date"}
+                />
+              </FieldWrapper>
+              <FieldWrapper>
+                <Field
+                  name={"isActive"}
+                  component={CheckboxComponent}
+                  label={"Is Active?"}
                 />
               </FieldWrapper>
             </fieldset>

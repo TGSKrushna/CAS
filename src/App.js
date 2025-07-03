@@ -11,14 +11,14 @@ import Dialogs from "./Components/Dialogs";
 import Indicator from "./Components/Indicator";
 
 function App() {
-  const [selectedComponent, setSelectedComponent] = useState("dropdown");
+  const [selectedComponent, setSelectedComponent] = useState("form");
 
   const renderComponent = () => {
     switch (selectedComponent) {
-      case "dropdown":
-        return <Dropdown />;
       case "form":
         return <FormComponent />;
+      case "dropdown":
+        return <Dropdown />;
       case "notification":
         return <NotificationComponent />;
       case "datepicker":
@@ -39,14 +39,14 @@ function App() {
         <AppBarSection>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <h1 style={{ margin: 0, fontSize: "16px" }}>My App</h1>
+            <Button look="flat" onClick={() => setSelectedComponent("form")}>
+              Form
+            </Button>
             <Button
               look="flat"
               onClick={() => setSelectedComponent("dropdown")}
             >
               Dropdown
-            </Button>
-            <Button look="flat" onClick={() => setSelectedComponent("form")}>
-              Form
             </Button>
             <Button
               look="flat"
